@@ -54,7 +54,7 @@ from torch_geometric.nn.norm.batch_norm import BatchNorm
 import json
 import argparse
 from pathlib import Path
-
+from util import resolve_pronouns, plot_losses, get_weight
 # Flatten function
 def flatten(list_of_list):
  return [item for sublist in list_of_list for item in sublist]
@@ -92,19 +92,6 @@ with open(label_path, "r") as file:
 
 
 
-def plot_losses(history_train_loss, history_val_loss):
-    # Set plotting style
-    #plt.style.use(('dark_background', 'bmh'))
-    plt.style.use('bmh')
-    plt.rc('axes', facecolor='none')
-    plt.rc('figure', figsize=(16, 4))
-
-    # Plotting loss graph
-    plt.plot(history_train_loss, label='Train')
-    plt.plot(history_val_loss, label='Validation')
-    plt.title('Loss Graph')
-    plt.legend()
-    plt.show()
 
 
 with open(train_txt_pkl, 'rb') as file:
@@ -339,7 +326,7 @@ class DataPreprocessor:
 
 data_preprocessor = DataPreprocessor()
 
-from utils import resolve_pronouns
+from utils import resolve_pronouns, plot_losses
 
 
 
@@ -489,8 +476,6 @@ val_loader = DataLoader(val_dataset, batch_size=1, shuffle=False)
 
 
 
-
-
 class MultiGranularityDecoder(nn.Module):
     def __init__(self, config, num_layers):
         super(MultiGranularityDecoder, self).__init__()
@@ -605,37 +590,7 @@ class EncoderDecoder(nn.Module):
 
 #based on observations that different percentile positions have greater prob of having important utts
 
-def get_weight(index, total_length, filename):
 
-    percentile = index / total_length
-    if "a" in filename:
-      if 0.02 <= percentile <= 0.18:
-        return 0.11  # e.g., 2.0 or higher
-      elif 0.24<=percentile<=0.36:
-        return 0.0
-      else:
-        return 0.09
-    if "b" in filename:
-      if 0.0 <= percentile <= 0.38:
-        return 0.09
-      elif 0.38<=percentile<=0.94:
-        return 0.08
-      else:
-        return 0.01
-    if "c" in filename:
-      if 0.0 <= percentile <= 0.18:
-        return 0.1
-      elif 0.18<=percentile<=0.66:
-        return 0.07
-      else:
-        return 0.04
-
-    if 0.0 <= percentile <= 0.2:
-        return 0.1
-    elif percentile<=0.82:
-        return 0.07
-    else:
-        return 0.04
 
 def weighted_loss(predictions, targets, dialogue_length, filename):
     loss = 0.0
