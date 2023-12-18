@@ -23,5 +23,5 @@ utterance length, yet this would risk breaking graphic information and is not he
 For Encoder part, GRU is applied to provide embedding for concatenated information of both MLP-processed graph relation representations and encoded dialogue text, due to its fast computation and capabilities of handling
 shorter dependencies. Following the model proposed by Jiaao Chen et al., we apply graph attention convolution layer embed utterance connections. 
 
-For Summarizer part, We use Multi-Granularity Cross Attention. Discourse Attention and Utterance Attention are both attended
+For Summarizer part, We use Multi-Granularity Cross Attention. Discourse Attention and Utterance Attention are both attended.
 
