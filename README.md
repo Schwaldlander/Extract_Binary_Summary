@@ -19,8 +19,9 @@ complex representations. To stablize results and avoid gradient vanishing, ReLU 
 adopted. Currently we set MLP layer as two layer with its output channel set as 128. Since dialogue
 length ranges from 128 to 980, it might be tempting to regulate each batch input into the same
 utterance length, yet this would risk breaking graphic information and is not helpful.
-## Encoder Decoder Structure
-GRU is applied to provide embedding for concatenated information of both MLP-processed graph relation representations and encoded dialogue text, due to its fast computation and capabilities of handling
-shorter dependencies. Following the model proposed by Jiaao Chen et al., we apply graph attention convolution layer embed utterance connections. The following equation shows how we incorporate
-utterance features with graph topology represented.
+## Encoder Summarizer Structure
+For Encoder part, GRU is applied to provide embedding for concatenated information of both MLP-processed graph relation representations and encoded dialogue text, due to its fast computation and capabilities of handling
+shorter dependencies. Following the model proposed by Jiaao Chen et al., we apply graph attention convolution layer embed utterance connections. 
+
+For Summarizer part, We use Multi-Granularity Cross Attention. Discourse Attention and Utterance Attention are both attended
 
