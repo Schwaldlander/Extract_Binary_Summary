@@ -578,7 +578,7 @@ class EncoderDecoder(nn.Module):
     output = self.tanh(output)
     output = self.dropout(output)
     output = self.fc_layer2(output)
-    output = torch.sigmoid(output)
+    
     output = output.squeeze(0).squeeze(1)
 
     return output
@@ -652,7 +652,7 @@ def train_model_here(model, optimizer, loss_criterion, num_epochs):
                     labels = torch.tensor(samples["labels"]).float().to(device)
 
                     outputs = model(samples)
-
+                    output = torch.sigmoid(output)
 
                     # Val loss
 
